@@ -30,7 +30,7 @@ async def on_message(message):
 
 def open_garage():
     GPIO.output(OUTPUT_PIN, GPIO.LOW)
-    time.sleep(1)
+    time.sleep(0.3)
     GPIO.output(OUTPUT_PIN, GPIO.HIGH)
 
 
