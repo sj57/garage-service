@@ -12,8 +12,6 @@ dotenv.load_dotenv()
 DISCORD_TOKEN = os.environ['DISCORD_TOKEN']
 client = discord.Client()
 OUTPUT_PIN = 40
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(OUTPUT_PIN, GPIO.OUT)
 SCRIPT_DIR = os.path.realpath(os.path.dirname(__file__))
 
 
@@ -35,17 +33,19 @@ def init_logging(log_file_path=None, max_file_size_bytes=5000000, backups=10, fi
         logging.getLogger("chardet").setLevel(logging.WARNING)
         logging.getLogger("chardet.charsetprober").setLevel(logging.WARNING)
         logging.getLogger("chardet.universaldetector").setLevel(logging.WARNING)
+        logging.getLogger("discord").setLevel(logging.WARNING)
 
     logging.basicConfig(handlers=handlers,
                         level=min(file_level, stdout_level),
                         format='%(asctime)s %(levelname)s - %(message)s')
 
 
-# @client.event
+@client.event
 async def on_message(message):
     if message.author == client.user:
         return
 
+    logging.info(f'Incoming command to open garage from {message.author}: {message.content}')
     response = '👍'
     try:
         open_garage()
@@ -62,6 +62,8 @@ def open_garage():
 
 
 def main():
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(OUTPUT_PIN, GPIO.OUT)
     GPIO.output(OUTPUT_PIN, GPIO.HIGH)
     client.run(DISCORD_TOKEN)
 

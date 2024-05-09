@@ -22,12 +22,14 @@ This code is a Discord bot that allows you to control a garage door using a Rasp
 
 1. Run the script with `python3 main.py` and test by sending any message to the bot
 
-1. Persist across reboots via cronjob **(optional)**
+1. Install as systemd service
     ```
-    sudo crontab -e
+    sudo nano /etc/systemd/system/garage.service
     ```
-    add
+    add the content of the `garage.service` file to the file and save it
     ```
-    @reboot sudo python3 /<full path to project dir>/main.py
+    sudo systemctl daemon-reload
+    sudo systemctl enable garage
+    sudo systemctl start garage
     ```
 
