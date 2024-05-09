@@ -6,7 +6,6 @@ StartLimitIntervalSec=0
 ExecStart=/usr/bin/python3 /home/ubuntu/sj57/main.py
 Type=simple
 Restart=always
-WatchdogSec=30s
 StandardOutput=null
 StandardError=journal
 Restart=on-failure
