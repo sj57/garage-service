@@ -81,6 +81,7 @@ if __name__ == '__main__':
         pass
     except Exception as e:
         logging.exception(f'Error: {e}')
+        sys.exit(1)
     finally:
         GPIO.cleanup()
         logging.info('Garage door opener stopped.')
